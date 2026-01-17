@@ -6,7 +6,7 @@ services:
     plan: free
     branch: main
     buildCommand: mkdir -p ~/.config/pip && cp pip.conf ~/.config/pip/pip.conf && pip install --upgrade pip && pip install --only-binary=:all: -r requirements.txt
-    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    startCommand: python3.11 -m uvicorn app:app --host 0.0.0.0 --port $PORT
     runtime: python
     runtimeVersion: "3.11.9"
     envVars:
@@ -19,4 +19,4 @@ services:
       - key: PATTERN_API_URL
         sync: false
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.11.9
