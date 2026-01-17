@@ -18,14 +18,16 @@ git status --short
 
 # Step 4: Commit
 Write-Host "`n💾 Step 4: Committing changes..." -ForegroundColor Yellow
-git commit -m "Fix: Add Render deployment configuration and resolve pydantic compilation issues
+git commit -m "Fix: Force Python 3.11.9 and binary-only pip installation for Render
 
-- Updated pydantic to 2.6.0 with pre-built wheels (no Rust compilation)
-- Added runtime.txt for Python 3.11.0
-- Added Procfile for uvicorn startup
-- Added render.yaml for automated deployment
-- Enhanced .gitignore with Python patterns
-- Added deployment documentation and verification script"
+CRITICAL FIXES:
+- Force Python 3.11.9 (prevent 3.13 which lacks wheels)
+- Downgrade to pydantic 2.4.2 with guaranteed binary wheels
+- Add pip.conf to force binary-only installation
+- Add --only-binary=:all: flag to prevent ANY source compilation
+- Update Procfile to use python3.11 explicitly
+
+This eliminates ALL Rust/Cargo compilation requirements."
 
 # Step 5: Push to remote
 Write-Host "`n🚀 Step 5: Pushing to remote..." -ForegroundColor Yellow
@@ -46,7 +48,8 @@ if ($confirmation -eq 'Y' -or $confirmation -eq 'y') {
     Write-Host "   - PATTERN_API_URL (optional)" -ForegroundColor Gray
     Write-Host "6. Click 'Apply' to deploy" -ForegroundColor White
     Write-Host "`n📖 For detailed instructions, see RENDER_DEPLOY.md" -ForegroundColor Cyan
-} else {
+}
+else {
     Write-Host "`n⚠️ Push cancelled. Run 'git push origin main' when ready." -ForegroundColor Yellow
 }
 

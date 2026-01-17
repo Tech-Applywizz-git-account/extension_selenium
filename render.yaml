@@ -5,8 +5,10 @@ services:
     region: oregon
     plan: free
     branch: main
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    buildCommand: mkdir -p ~/.config/pip && cp pip.conf ~/.config/pip/pip.conf && pip install --upgrade pip && pip install --only-binary=:all: -r requirements.txt
     startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    runtime: python
+    runtimeVersion: "3.11.9"
     envVars:
       - key: AWS_ACCESS_KEY_ID
         sync: false
